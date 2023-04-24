@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "amvYNUVFzL+igh/INqthmcW7lD2tM1ptJTugdQe6Ipt09g4ceEexnZz0GS761RjGBGD2yP1btaW0MqwgiDwMbA==",
+  "dgSpecHash": "Z3XaUXb9Ugn9WlJnHDhUMptoawmCFnd9fL+HaYsr1rTHuj1G4FlhNEv3zaCFfkG7XNJVWcAUUlN+OlA67sxSNg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Julia\\source\\repos\\MarketPlaceDisca\\MarketPlaceDisca\\MarketPlaceDisca.csproj",
+  "projectFilePath": "C:\\Users\\Julia\\OneDrive\\Documentos\\Uni\\software\\Proyecto\\BackEndMarketPlaceDisca\\MarketPlaceDisca\\MarketPlaceDisca\\MarketPlaceDisca.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Julia\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Julia\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.5\\microsoft.entityframeworkcore.7.0.5.nupkg.sha512",

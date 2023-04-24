@@ -11,10 +11,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DbMpdiscaContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("connectMPDis"), Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.32-mysql")));
-
+builder.Services.AddCors(options => options.AddPolicy("AllowAngularOrigins",
+                                    builder => builder.AllowAnyOrigin()
+                                                    .WithOrigins("http://localhost:4200")
+                                                    .AllowAnyHeader()
+                                                    .AllowAnyMethod()));
 
 var app = builder.Build();
-
+app.UseCors("AllowAngularOrigins");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

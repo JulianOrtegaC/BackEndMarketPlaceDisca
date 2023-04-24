@@ -7,8 +7,9 @@ using System.Text;
 
 namespace MarketPlaceSoftware.Controllers
 {
-    [Route("[controller]")]
+    
     [ApiController]
+    [Route("[controller]")]
     public class LoginController : ControllerBase
     {
 

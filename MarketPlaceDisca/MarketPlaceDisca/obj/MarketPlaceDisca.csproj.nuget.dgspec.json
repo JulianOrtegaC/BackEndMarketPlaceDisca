@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Julia\\source\\repos\\MarketPlaceDisca\\MarketPlaceDisca\\MarketPlaceDisca.csproj": {}
+    "C:\\Users\\Julia\\OneDrive\\Documentos\\Uni\\software\\Proyecto\\BackEndMarketPlaceDisca\\MarketPlaceDisca\\MarketPlaceDisca\\MarketPlaceDisca.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Julia\\source\\repos\\MarketPlaceDisca\\MarketPlaceDisca\\MarketPlaceDisca.csproj": {
+    "C:\\Users\\Julia\\OneDrive\\Documentos\\Uni\\software\\Proyecto\\BackEndMarketPlaceDisca\\MarketPlaceDisca\\MarketPlaceDisca\\MarketPlaceDisca.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Julia\\source\\repos\\MarketPlaceDisca\\MarketPlaceDisca\\MarketPlaceDisca.csproj",
+        "projectUniqueName": "C:\\Users\\Julia\\OneDrive\\Documentos\\Uni\\software\\Proyecto\\BackEndMarketPlaceDisca\\MarketPlaceDisca\\MarketPlaceDisca\\MarketPlaceDisca.csproj",
         "projectName": "MarketPlaceDisca",
-        "projectPath": "C:\\Users\\Julia\\source\\repos\\MarketPlaceDisca\\MarketPlaceDisca\\MarketPlaceDisca.csproj",
+        "projectPath": "C:\\Users\\Julia\\OneDrive\\Documentos\\Uni\\software\\Proyecto\\BackEndMarketPlaceDisca\\MarketPlaceDisca\\MarketPlaceDisca\\MarketPlaceDisca.csproj",
         "packagesPath": "C:\\Users\\Julia\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Julia\\source\\repos\\MarketPlaceDisca\\MarketPlaceDisca\\obj\\",
+        "outputPath": "C:\\Users\\Julia\\OneDrive\\Documentos\\Uni\\software\\Proyecto\\BackEndMarketPlaceDisca\\MarketPlaceDisca\\MarketPlaceDisca\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Julia\\AppData\\Roaming\\NuGet\\NuGet.Config",
