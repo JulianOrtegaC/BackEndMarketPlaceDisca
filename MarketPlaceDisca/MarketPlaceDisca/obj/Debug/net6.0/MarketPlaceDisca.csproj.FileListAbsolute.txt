@@ -106,3 +106,10 @@ C:\Users\Julia\OneDrive\Documentos\Uni\software\Proyecto\BackEndMarketPlaceDisca
 C:\Users\Julia\OneDrive\Documentos\Uni\software\Proyecto\BackEndMarketPlaceDisca\MarketPlaceDisca\MarketPlaceDisca\obj\Debug\net6.0\MarketPlaceDisca.pdb
 C:\Users\Julia\OneDrive\Documentos\Uni\software\Proyecto\BackEndMarketPlaceDisca\MarketPlaceDisca\MarketPlaceDisca\obj\Debug\net6.0\MarketPlaceDisca.genruntimeconfig.cache
 C:\Users\Julia\OneDrive\Documentos\Uni\software\Proyecto\BackEndMarketPlaceDisca\MarketPlaceDisca\MarketPlaceDisca\obj\Debug\net6.0\ref\MarketPlaceDisca.dll
+C:\Users\Julia\OneDrive\Documentos\Uni\software\Proyecto\BackEndMarketPlaceDisca\MarketPlaceDisca\MarketPlaceDisca\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Julia\OneDrive\Documentos\Uni\software\Proyecto\BackEndMarketPlaceDisca\MarketPlaceDisca\MarketPlaceDisca\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Julia\OneDrive\Documentos\Uni\software\Proyecto\BackEndMarketPlaceDisca\MarketPlaceDisca\MarketPlaceDisca\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\Julia\OneDrive\Documentos\Uni\software\Proyecto\BackEndMarketPlaceDisca\MarketPlaceDisca\MarketPlaceDisca\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Julia\OneDrive\Documentos\Uni\software\Proyecto\BackEndMarketPlaceDisca\MarketPlaceDisca\MarketPlaceDisca\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Julia\OneDrive\Documentos\Uni\software\Proyecto\BackEndMarketPlaceDisca\MarketPlaceDisca\MarketPlaceDisca\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Julia\OneDrive\Documentos\Uni\software\Proyecto\BackEndMarketPlaceDisca\MarketPlaceDisca\MarketPlaceDisca\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
