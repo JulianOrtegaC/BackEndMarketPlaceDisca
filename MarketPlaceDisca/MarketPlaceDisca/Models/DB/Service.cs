@@ -17,7 +17,7 @@ public partial class Service
 
     public virtual ICollection<Request> Requests { get; set; } = new List<Request>();
 
-    public virtual ICollection<Category> CategoryIdcategories { get; set; } = new List<Category>();
+    public virtual ICollection<UserHasService> UserHasServices { get; set; } = new List<UserHasService>();
 
-    public virtual ICollection<User> UserIdUsers { get; set; } = new List<User>();
+    public virtual ICollection<Category> CategoryIdcategories { get; set; } = new List<Category>();
 }

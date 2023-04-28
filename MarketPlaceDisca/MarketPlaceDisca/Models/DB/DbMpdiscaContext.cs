@@ -21,6 +21,10 @@ public partial class DbMpdiscaContext : DbContext
 
     public virtual DbSet<CredentialsLog> CredentialsLogs { get; set; }
 
+    public virtual DbSet<Departament> Departaments { get; set; }
+
+    public virtual DbSet<Municipio> Municipios { get; set; }
+
     public virtual DbSet<Request> Requests { get; set; }
 
     public virtual DbSet<Service> Services { get; set; }
@@ -31,6 +35,11 @@ public partial class DbMpdiscaContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    public virtual DbSet<UserHasService> UserHasServices { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseMySql("server=localhost;database=db_mpdisca;uid=root;pwd=7611", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.32-mysql"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -115,6 +124,33 @@ public partial class DbMpdiscaContext : DbContext
                 .HasConstraintName("fk_Credentials_Log_User1");
         });
 
+        modelBuilder.Entity<Departament>(entity =>
+        {
+            entity.HasKey(e => e.Codigodepartamento).HasName("PRIMARY");
+
+            entity.ToTable("departament");
+
+            entity.Property(e => e.Codigodepartamento)
+                .ValueGeneratedNever()
+                .HasColumnName("codigodepartamento");
+            entity.Property(e => e.Nombredepartamento)
+                .HasMaxLength(45)
+                .HasColumnName("nombredepartamento");
+        });
+
+        modelBuilder.Entity<Municipio>(entity =>
+        {
+            entity.HasKey(e => e.Idmunicipios).HasName("PRIMARY");
+
+            entity.ToTable("municipios");
+
+            entity.Property(e => e.Idmunicipios).HasColumnName("idmunicipios");
+            entity.Property(e => e.Codigodepartamento).HasColumnName("codigodepartamento");
+            entity.Property(e => e.Nombremunicipio)
+                .HasMaxLength(45)
+                .HasColumnName("nombremunicipio");
+        });
+
         modelBuilder.Entity<Request>(entity =>
         {
             entity.HasKey(e => new { e.ServiceIdService, e.UserIdUser })
@@ -171,7 +207,7 @@ public partial class DbMpdiscaContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("name_service");
             entity.Property(e => e.PathPhotos)
-                .HasMaxLength(45)
+                .HasMaxLength(200)
                 .HasColumnName("pathPhotos");
 
             entity.HasMany(d => d.CategoryIdcategories).WithMany(p => p.ServiceIdServices)
@@ -255,8 +291,9 @@ public partial class DbMpdiscaContext : DbContext
                 .HasMaxLength(45)
                 .HasColumnName("idUser");
             entity.Property(e => e.Address)
-                .HasMaxLength(45)
+                .HasMaxLength(200)
                 .HasColumnName("address");
+            entity.Property(e => e.BirthDate).HasColumnName("birthDate");
             entity.Property(e => e.CoverPhoto)
                 .HasMaxLength(45)
                 .HasColumnName("coverPhoto");
@@ -281,31 +318,37 @@ public partial class DbMpdiscaContext : DbContext
             entity.Property(e => e.TypeDocument)
                 .HasMaxLength(2)
                 .HasColumnName("typeDocument");
+        });
 
-            entity.HasMany(d => d.ServiceIdServices).WithMany(p => p.UserIdUsers)
-                .UsingEntity<Dictionary<string, object>>(
-                    "UserHasService",
-                    r => r.HasOne<Service>().WithMany()
-                        .HasForeignKey("ServiceIdService")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("fk_User_has_Subasta_Subasta1"),
-                    l => l.HasOne<User>().WithMany()
-                        .HasForeignKey("UserIdUser")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("fk_User_has_Subasta_User1"),
-                    j =>
-                    {
-                        j.HasKey("UserIdUser", "ServiceIdService")
-                            .HasName("PRIMARY")
-                            .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
-                        j.ToTable("user_has_service");
-                        j.HasIndex(new[] { "ServiceIdService" }, "fk_User_has_Subasta_Subasta1_idx");
-                        j.HasIndex(new[] { "UserIdUser" }, "fk_User_has_Subasta_User1_idx");
-                        j.IndexerProperty<string>("UserIdUser")
-                            .HasMaxLength(20)
-                            .HasColumnName("User_idUser");
-                        j.IndexerProperty<int>("ServiceIdService").HasColumnName("Service_idService");
-                    });
+        modelBuilder.Entity<UserHasService>(entity =>
+        {
+            entity.HasKey(e => new { e.UserIdUser, e.ServiceIdService })
+                .HasName("PRIMARY")
+                .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
+
+            entity.ToTable("user_has_service");
+
+            entity.HasIndex(e => e.ServiceIdService, "fk_User_has_Subasta_Subasta1_idx");
+
+            entity.HasIndex(e => e.UserIdUser, "fk_User_has_Subasta_User1_idx");
+
+            entity.Property(e => e.UserIdUser)
+                .HasMaxLength(20)
+                .HasColumnName("User_idUser");
+            entity.Property(e => e.ServiceIdService).HasColumnName("Service_idService");
+            entity.Property(e => e.PathPhotos)
+                .HasMaxLength(150)
+                .HasColumnName("pathPhotos");
+
+            entity.HasOne(d => d.ServiceIdServiceNavigation).WithMany(p => p.UserHasServices)
+                .HasForeignKey(d => d.ServiceIdService)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_User_has_Subasta_Subasta1");
+
+            entity.HasOne(d => d.UserIdUserNavigation).WithMany(p => p.UserHasServices)
+                .HasForeignKey(d => d.UserIdUser)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_User_has_Subasta_User1");
         });
 
         OnModelCreatingPartial(modelBuilder);

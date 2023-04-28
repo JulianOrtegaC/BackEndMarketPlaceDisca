@@ -8,10 +8,7 @@
 
         public string LastNameUser { get; set; } = null!;
 
-        public string Address { get; set; } = null!;
-
-        public string Telephone { get; set; } = null!;
-
+        public DateOnly BirthDate { get; set; } 
         public string Email { get; set; } = null!;
 
         public string TypeDocument { get; set; } = null!;

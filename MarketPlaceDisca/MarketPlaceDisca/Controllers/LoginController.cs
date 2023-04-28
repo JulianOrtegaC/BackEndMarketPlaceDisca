@@ -38,7 +38,7 @@ namespace MarketPlaceSoftware.Controllers
                 User perAux = _context.Users.Where(p => p.IdUser == user.UserIdUser).FirstOrDefault();
                 DateTime expirationDate = DateTime.UtcNow.AddMinutes(30);
                 string token = generateToken(userName, expirationDate);
-                return Ok(new { token = token, IdUser = user.UserIdUser, nameUser = perAux.NameUser, lastNameUser = perAux.LastNameUser, address = perAux.Address, telephone = perAux.Telephone, email = perAux.Email, TypeDocument = perAux.TypeDocument, Gender = perAux.Gender });
+                return Ok(new { token = token, IdUser = user.UserIdUser, nameUser = perAux.NameUser, lastNameUser = perAux.LastNameUser, birthDate = perAux.BirthDate, email = perAux.Email, TypeDocument = perAux.TypeDocument, Gender = perAux.Gender });
                 
             }
             else
@@ -82,8 +82,7 @@ namespace MarketPlaceSoftware.Controllers
                             IdUser = person.IdUser,
                             NameUser = person.NameUser,
                             LastNameUser = person.LastNameUser,
-                            Address = person.Address,
-                            Telephone = person.Telephone,
+                            BirthDate = person.BirthDate,
                             Email = person.Email,
                             TypeDocument = person.TypeDocument,
                             Gender = person.Gender
@@ -103,12 +102,12 @@ namespace MarketPlaceSoftware.Controllers
                     }
                     else
                     {
-                        return BadRequest(new { message = "Numero de documento repetido" });
+                        return BadRequest(new { message = "Documento de Identidad  ya Registrado" });
                     }
                 }
                 else
                 {
-                    return BadRequest(new { message = "Username ya esta en uso" });
+                    return BadRequest(new { message = " El Correo Electronico ya esta Registrado" });
                 }
 
 
@@ -120,7 +119,6 @@ namespace MarketPlaceSoftware.Controllers
         [Route("Tokenn")]
         public string generateToken(string username, DateTime expirationDate)
         {
-            Console.WriteLine("hasta aqui melo");
 #pragma warning disable CS8604 // Posible argumento de referencia nulo
             var keyByte = Encoding.ASCII.GetBytes(_confi.GetSection("settings").GetSection("secretKey").ToString());
 #pragma warning restore CS8604 // Posible argumento de referencia nulo
