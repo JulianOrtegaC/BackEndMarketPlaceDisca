@@ -113,3 +113,5 @@ C:\Users\Julia\OneDrive\Documentos\Uni\software\Proyecto\BackEndMarketPlaceDisca
 C:\Users\Julia\OneDrive\Documentos\Uni\software\Proyecto\BackEndMarketPlaceDisca\MarketPlaceDisca\MarketPlaceDisca\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\Julia\OneDrive\Documentos\Uni\software\Proyecto\BackEndMarketPlaceDisca\MarketPlaceDisca\MarketPlaceDisca\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\Julia\OneDrive\Documentos\Uni\software\Proyecto\BackEndMarketPlaceDisca\MarketPlaceDisca\MarketPlaceDisca\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Julia\OneDrive\Documentos\Uni\software\Proyecto\BackEndMarketPlaceDisca\MarketPlaceDisca\MarketPlaceDisca\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\Julia\OneDrive\Documentos\Uni\software\Proyecto\BackEndMarketPlaceDisca\MarketPlaceDisca\MarketPlaceDisca\bin\Debug\net6.0\Newtonsoft.Json.dll

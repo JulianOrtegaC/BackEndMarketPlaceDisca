@@ -32,13 +32,13 @@ namespace MarketPlaceSoftware.Controllers
         public IActionResult Login([FromQuery] string userName, [FromQuery] string password)
         {
             string auxPassword = ToSHA256(password);
-            Credential user = _context.Credentials.Where(c => c.Username == userName && c.Password == auxPassword).FirstOrDefault();
-            if (user != null)
+            Credential creden = _context.Credentials.Where(c => c.Username == userName && c.Password == auxPassword).FirstOrDefault();
+            if (creden != null)
             {
-                User perAux = _context.Users.Where(p => p.IdUser == user.UserIdUser).FirstOrDefault();
+                User user = _context.Users.Where(p => p.IdUser == creden.UserIdUser).FirstOrDefault();
                 DateTime expirationDate = DateTime.UtcNow.AddMinutes(30);
                 string token = generateToken(userName, expirationDate);
-                return Ok(new { token = token, IdUser = user.UserIdUser, nameUser = perAux.NameUser, lastNameUser = perAux.LastNameUser, birthDate = perAux.BirthDate, email = perAux.Email, TypeDocument = perAux.TypeDocument, Gender = perAux.Gender });
+                return Ok(new { token = token, usuario = user }); ;
                 
             }
             else

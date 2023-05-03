@@ -4,6 +4,7 @@ using System.Reflection;
 
 namespace MarketPlaceDisca.Controllers
 {
+    [Route("[controller]")]
     public class UserController: ControllerBase
     {
 
@@ -14,7 +15,8 @@ namespace MarketPlaceDisca.Controllers
 
 
 
-        [HttpPatch("{id}")]
+        [Route("editUser/{id}")]
+        [HttpPatch]
         public async Task<ActionResult<User>> PatchUser(string id, [FromBody] User updateModel)
         {
             // Busca el usuario por su identificador en la base de datos
