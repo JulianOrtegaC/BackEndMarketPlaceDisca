@@ -10,6 +10,4 @@ public partial class Category
     public string NameCategory { get; set; } = null!;
 
     public string Description { get; set; } = null!;
-
-    public virtual ICollection<Service> ServiceIdServices { get; set; } = new List<Service>();
 }

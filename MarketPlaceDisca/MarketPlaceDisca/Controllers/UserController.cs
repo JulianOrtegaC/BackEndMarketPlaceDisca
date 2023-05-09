@@ -1,15 +1,18 @@
 ﻿using MarketPlaceDisca.Models.DB;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace MarketPlaceDisca.Controllers
 {
     [Route("[controller]")]
-    public class UserController: ControllerBase
+    public class UserController : ControllerBase
     {
 
         private readonly DbMpdiscaContext _context;
-        public UserController(DbMpdiscaContext context) { 
+        public UserController(DbMpdiscaContext context)
+        {
             _context = context;
         }
 
@@ -21,6 +24,7 @@ namespace MarketPlaceDisca.Controllers
         {
             // Busca el usuario por su identificador en la base de datos
             var user = await _context.Users.FindAsync(id);
+            var emailaux = user.Email;
 
             if (user == null)
             {
@@ -46,7 +50,20 @@ namespace MarketPlaceDisca.Controllers
             }
             if (!string.IsNullOrEmpty(updateModel.Email))
             {
-                user.Email = updateModel.Email;
+                var userAux = await _context.Users.SingleOrDefaultAsync(u => u.Email == updateModel.Email);
+
+                if (userAux == null)
+                {
+                    var credenAux = await _context.Credentials.SingleOrDefaultAsync(u => u.Username == emailaux);
+
+                    credenAux.Username = updateModel.Email;
+                    user.Email = updateModel.Email;
+                }
+                else
+                {
+                    return BadRequest("El correo ingresado ya esta en uso");
+                }
+
             }
             if (!string.IsNullOrEmpty(updateModel.TypeDocument))
             {
@@ -76,5 +93,7 @@ namespace MarketPlaceDisca.Controllers
             // Retorna el usuario actualizado
             return user;
         }
+
+
     }
 }

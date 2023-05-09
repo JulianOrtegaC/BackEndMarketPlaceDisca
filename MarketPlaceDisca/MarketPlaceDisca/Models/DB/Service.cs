@@ -15,9 +15,13 @@ public partial class Service
 
     public string? PathPhotos { get; set; }
 
+    public string Address { get; set; } = null!;
+
+    public string? DatesDispo { get; set; }
+
     public virtual ICollection<Request> Requests { get; set; } = new List<Request>();
 
-    public virtual ICollection<UserHasService> UserHasServices { get; set; } = new List<UserHasService>();
+    public virtual ICollection<ServiceHasCategory> ServiceHasCategories { get; set; } = new List<ServiceHasCategory>();
 
-    public virtual ICollection<Category> CategoryIdcategories { get; set; } = new List<Category>();
+    public virtual ICollection<User> UserIdUsers { get; set; } = new List<User>();
 }

@@ -11,9 +11,9 @@ public partial class User
 
     public string LastNameUser { get; set; } = null!;
 
-    public string? Address { get; set; }
+    public string Address { get; set; } = null!;
 
-    public string? Telephone { get; set; }
+    public string Telephone { get; set; } = null!;
 
     public string Email { get; set; } = null!;
 
@@ -35,5 +35,5 @@ public partial class User
 
     public virtual ICollection<Session> Sessions { get; set; } = new List<Session>();
 
-    public virtual ICollection<UserHasService> UserHasServices { get; set; } = new List<UserHasService>();
+    public virtual ICollection<Service> ServiceIdServices { get; set; } = new List<Service>();
 }

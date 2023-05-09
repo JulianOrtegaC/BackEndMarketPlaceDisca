@@ -60,6 +60,26 @@ namespace MarketPlaceSoftware.Controllers
             return sb.ToString();
         }
 
+
+        [Route("cambiarcontrasena")]
+        [HttpPut]
+        public async Task<ActionResult> CambiarContrasena([FromBody] ChangePassword change)
+        {
+            string auxPassword = ToSHA256(change.ContrasenaActual);
+            Credential creden = _context.Credentials.Where(c => c.Username == change.Email && c.Password == auxPassword).FirstOrDefault();
+            if (creden != null)
+            {
+                string auxNewPassword = ToSHA256(change.NuevaContrasena);
+                creden.Password = auxNewPassword;
+                _context.SaveChanges();
+                return Ok();
+            }
+            else {
+                return BadRequest("La contraseña actual ingresada no es la correcta.");
+            }
+    
+        }
+
         [Route("Register")]
         [HttpPost]
         public async Task<IActionResult> Register(Registro person)

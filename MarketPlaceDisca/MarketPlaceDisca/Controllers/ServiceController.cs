@@ -85,7 +85,7 @@ namespace MarketPlaceDisca.Controllers
         }
 
         // PATCH api/services/5
-        /*[HttpPatch("{id}")]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> PatchService(int id, JsonPatchDocument<Service> patchDoc)
         {
             var service = await _context.Services.FindAsync(id);
@@ -106,7 +106,7 @@ namespace MarketPlaceDisca.Controllers
 
             return NoContent();
         }
-        */
+        
 
 
     }

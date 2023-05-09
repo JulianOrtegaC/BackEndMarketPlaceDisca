@@ -29,13 +29,13 @@ public partial class DbMpdiscaContext : DbContext
 
     public virtual DbSet<Service> Services { get; set; }
 
+    public virtual DbSet<ServiceHasCategory> ServiceHasCategories { get; set; }
+
     public virtual DbSet<ServicesContract> ServicesContracts { get; set; }
 
     public virtual DbSet<Session> Sessions { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
-
-    public virtual DbSet<UserHasService> UserHasServices { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
@@ -44,14 +44,17 @@ public partial class DbMpdiscaContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
-            .UseCollation("utf8mb4_0900_ai_ci")
-            .HasCharSet("utf8mb4");
+            .UseCollation("utf8mb3_general_ci")
+            .HasCharSet("utf8mb3");
 
         modelBuilder.Entity<Category>(entity =>
         {
             entity.HasKey(e => e.Idcategory).HasName("PRIMARY");
 
-            entity.ToTable("category");
+            entity
+                .ToTable("category")
+                .HasCharSet("utf8mb4")
+                .UseCollation("utf8mb4_0900_ai_ci");
 
             entity.Property(e => e.Idcategory)
                 .ValueGeneratedNever()
@@ -74,7 +77,7 @@ public partial class DbMpdiscaContext : DbContext
 
             entity.Property(e => e.IdCredentials).HasColumnName("idCredentials");
             entity.Property(e => e.Password)
-                .HasMaxLength(100)
+                .HasMaxLength(45)
                 .HasColumnName("password");
             entity.Property(e => e.UserIdUser)
                 .HasMaxLength(20)
@@ -128,7 +131,10 @@ public partial class DbMpdiscaContext : DbContext
         {
             entity.HasKey(e => e.Codigodepartamento).HasName("PRIMARY");
 
-            entity.ToTable("departament");
+            entity
+                .ToTable("departament")
+                .HasCharSet("utf8mb4")
+                .UseCollation("utf8mb4_0900_ai_ci");
 
             entity.Property(e => e.Codigodepartamento)
                 .ValueGeneratedNever()
@@ -142,7 +148,10 @@ public partial class DbMpdiscaContext : DbContext
         {
             entity.HasKey(e => e.Idmunicipios).HasName("PRIMARY");
 
-            entity.ToTable("municipios");
+            entity
+                .ToTable("municipios")
+                .HasCharSet("utf8mb4")
+                .UseCollation("utf8mb4_0900_ai_ci");
 
             entity.Property(e => e.Idmunicipios).HasColumnName("idmunicipios");
             entity.Property(e => e.Codigodepartamento).HasColumnName("codigodepartamento");
@@ -196,9 +205,15 @@ public partial class DbMpdiscaContext : DbContext
 
             entity.ToTable("service");
 
-            entity.Property(e => e.IdService)
-                .ValueGeneratedNever()
-                .HasColumnName("idService");
+            entity.HasIndex(e => e.IdService, "idService_UNIQUE").IsUnique();
+
+            entity.Property(e => e.IdService).HasColumnName("idService");
+            entity.Property(e => e.Address)
+                .HasMaxLength(45)
+                .HasColumnName("address");
+            entity.Property(e => e.DatesDispo)
+                .HasMaxLength(100)
+                .HasColumnName("dates_dispo");
             entity.Property(e => e.Description)
                 .HasMaxLength(100)
                 .HasColumnName("description");
@@ -207,31 +222,31 @@ public partial class DbMpdiscaContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("name_service");
             entity.Property(e => e.PathPhotos)
-                .HasMaxLength(200)
+                .HasMaxLength(45)
                 .HasColumnName("pathPhotos");
+        });
 
-            entity.HasMany(d => d.CategoryIdcategories).WithMany(p => p.ServiceIdServices)
-                .UsingEntity<Dictionary<string, object>>(
-                    "ServiceHasCategory",
-                    r => r.HasOne<Category>().WithMany()
-                        .HasForeignKey("CategoryIdcategory")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("fk_Service_has_category_category1"),
-                    l => l.HasOne<Service>().WithMany()
-                        .HasForeignKey("ServiceIdService")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("fk_Service_has_category_Service1"),
-                    j =>
-                    {
-                        j.HasKey("ServiceIdService", "CategoryIdcategory")
-                            .HasName("PRIMARY")
-                            .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
-                        j.ToTable("service_has_category");
-                        j.HasIndex(new[] { "ServiceIdService" }, "fk_Service_has_category_Service1_idx");
-                        j.HasIndex(new[] { "CategoryIdcategory" }, "fk_Service_has_category_category1_idx");
-                        j.IndexerProperty<int>("ServiceIdService").HasColumnName("Service_idService");
-                        j.IndexerProperty<int>("CategoryIdcategory").HasColumnName("category_idcategory");
-                    });
+        modelBuilder.Entity<ServiceHasCategory>(entity =>
+        {
+            entity.HasKey(e => new { e.ServiceIdService, e.CategoryIdcategory })
+                .HasName("PRIMARY")
+                .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
+
+            entity.ToTable("service_has_category");
+
+            entity.HasIndex(e => e.ServiceIdService, "fk_Service_has_category_Service1_idx");
+
+            entity.HasIndex(e => e.CategoryIdcategory, "fk_Service_has_category_category1_idx");
+
+            entity.Property(e => e.ServiceIdService)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("Service_idService");
+            entity.Property(e => e.CategoryIdcategory).HasColumnName("category_idcategory");
+
+            entity.HasOne(d => d.ServiceIdServiceNavigation).WithMany(p => p.ServiceHasCategories)
+                .HasForeignKey(d => d.ServiceIdService)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_Service_has_category_Service1");
         });
 
         modelBuilder.Entity<ServicesContract>(entity =>
@@ -291,7 +306,7 @@ public partial class DbMpdiscaContext : DbContext
                 .HasMaxLength(45)
                 .HasColumnName("idUser");
             entity.Property(e => e.Address)
-                .HasMaxLength(200)
+                .HasMaxLength(45)
                 .HasColumnName("address");
             entity.Property(e => e.BirthDate).HasColumnName("birthDate");
             entity.Property(e => e.CoverPhoto)
@@ -318,37 +333,31 @@ public partial class DbMpdiscaContext : DbContext
             entity.Property(e => e.TypeDocument)
                 .HasMaxLength(2)
                 .HasColumnName("typeDocument");
-        });
 
-        modelBuilder.Entity<UserHasService>(entity =>
-        {
-            entity.HasKey(e => new { e.UserIdUser, e.ServiceIdService })
-                .HasName("PRIMARY")
-                .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
-
-            entity.ToTable("user_has_service");
-
-            entity.HasIndex(e => e.ServiceIdService, "fk_User_has_Subasta_Subasta1_idx");
-
-            entity.HasIndex(e => e.UserIdUser, "fk_User_has_Subasta_User1_idx");
-
-            entity.Property(e => e.UserIdUser)
-                .HasMaxLength(20)
-                .HasColumnName("User_idUser");
-            entity.Property(e => e.ServiceIdService).HasColumnName("Service_idService");
-            entity.Property(e => e.PathPhotos)
-                .HasMaxLength(150)
-                .HasColumnName("pathPhotos");
-
-            entity.HasOne(d => d.ServiceIdServiceNavigation).WithMany(p => p.UserHasServices)
-                .HasForeignKey(d => d.ServiceIdService)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_User_has_Subasta_Subasta1");
-
-            entity.HasOne(d => d.UserIdUserNavigation).WithMany(p => p.UserHasServices)
-                .HasForeignKey(d => d.UserIdUser)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_User_has_Subasta_User1");
+            entity.HasMany(d => d.ServiceIdServices).WithMany(p => p.UserIdUsers)
+                .UsingEntity<Dictionary<string, object>>(
+                    "UserHasService",
+                    r => r.HasOne<Service>().WithMany()
+                        .HasForeignKey("ServiceIdService")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("fk_User_has_Service_Service"),
+                    l => l.HasOne<User>().WithMany()
+                        .HasForeignKey("UserIdUser")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("fk_User_has_Subasta_User1"),
+                    j =>
+                    {
+                        j.HasKey("UserIdUser", "ServiceIdService")
+                            .HasName("PRIMARY")
+                            .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
+                        j.ToTable("user_has_service");
+                        j.HasIndex(new[] { "ServiceIdService" }, "fk_User_has_Subasta_Subasta1_idx");
+                        j.HasIndex(new[] { "UserIdUser" }, "fk_User_has_Subasta_User1_idx");
+                        j.IndexerProperty<string>("UserIdUser")
+                            .HasMaxLength(20)
+                            .HasColumnName("User_idUser");
+                        j.IndexerProperty<int>("ServiceIdService").HasColumnName("Service_idService");
+                    });
         });
 
         OnModelCreatingPartial(modelBuilder);
