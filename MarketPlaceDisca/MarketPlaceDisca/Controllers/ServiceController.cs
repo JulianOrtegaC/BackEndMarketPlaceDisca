@@ -5,7 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MarketPlaceDisca.Controllers
 {
-    public class ServiceController: ControllerBase
+    [Route("api/services")]
+    public class ServiceController : ControllerBase
     {
         private readonly DbMpdiscaContext _context;
 
@@ -15,11 +16,17 @@ namespace MarketPlaceDisca.Controllers
         }
 
         // GET api/services
+
+        /* public async Task<ActionResult<IEnumerable<Service>>> listServices()
+         {
+             return await _context.Services.ToListAsync();
+         }*/
         [HttpGet]
         [Route("listServices")]
-        public async Task<ActionResult<IEnumerable<Service>>> listServices()
+        public ActionResult<Service> listServices()
         {
-            return await _context.Services.ToListAsync();
+            var services = _context.Services.ToList();
+            return Ok(services);
         }
 
         // GET api/services/5
@@ -40,7 +47,7 @@ namespace MarketPlaceDisca.Controllers
         [HttpPost]
         [Route("createService")]
 
-        public async Task<ActionResult<Service>> createService(Service service)
+        public async Task<ActionResult<Service>> createService([FromBody] Service service)
         {
             _context.Services.Add(service);
             await _context.SaveChangesAsync();

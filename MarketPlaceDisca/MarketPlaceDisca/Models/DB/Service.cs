@@ -19,6 +19,8 @@ public partial class Service
 
     public string? DatesDispo { get; set; }
 
+    public string Categoria { get; set; } = null!;
+
     public virtual ICollection<Request> Requests { get; set; } = new List<Request>();
 
     public virtual ICollection<ServiceHasCategory> ServiceHasCategories { get; set; } = new List<ServiceHasCategory>();

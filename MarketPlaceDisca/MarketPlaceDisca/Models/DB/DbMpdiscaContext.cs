@@ -77,7 +77,7 @@ public partial class DbMpdiscaContext : DbContext
 
             entity.Property(e => e.IdCredentials).HasColumnName("idCredentials");
             entity.Property(e => e.Password)
-                .HasMaxLength(45)
+                .HasMaxLength(200)
                 .HasColumnName("password");
             entity.Property(e => e.UserIdUser)
                 .HasMaxLength(20)
@@ -211,6 +211,9 @@ public partial class DbMpdiscaContext : DbContext
             entity.Property(e => e.Address)
                 .HasMaxLength(45)
                 .HasColumnName("address");
+            entity.Property(e => e.Categoria)
+                .HasMaxLength(45)
+                .HasColumnName("categoria");
             entity.Property(e => e.DatesDispo)
                 .HasMaxLength(100)
                 .HasColumnName("dates_dispo");

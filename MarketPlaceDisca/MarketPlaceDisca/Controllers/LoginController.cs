@@ -10,6 +10,8 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Mvc.Routing;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace MarketPlaceSoftware.Controllers
 {
@@ -27,7 +29,10 @@ namespace MarketPlaceSoftware.Controllers
             _context = context;
             _confi = confi;
         }
-
+        private readonly JsonSerializerOptions jsonOptions = new JsonSerializerOptions
+        {
+            ReferenceHandler = ReferenceHandler.Preserve
+        };
         [HttpPost]
         public IActionResult Login([FromQuery] string userName, [FromQuery] string password)
         {
@@ -38,8 +43,9 @@ namespace MarketPlaceSoftware.Controllers
                 User user = _context.Users.Where(p => p.IdUser == creden.UserIdUser).FirstOrDefault();
                 DateTime expirationDate = DateTime.UtcNow.AddMinutes(30);
                 string token = generateToken(userName, expirationDate);
-                return Ok(new { token = token, usuario = user }); ;
-                
+                return Ok(new { token = token, usuario = JsonSerializer.Serialize(user, jsonOptions) });
+
+
             }
             else
             {
