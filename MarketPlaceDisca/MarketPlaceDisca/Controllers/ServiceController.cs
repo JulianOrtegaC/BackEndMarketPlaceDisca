@@ -29,6 +29,14 @@ namespace MarketPlaceDisca.Controllers
             return Ok(services);
         }
 
+        [HttpGet]
+        [Route("listServicesByIdUser")]
+        public ActionResult<List<Service>> listServicesByIdUser(string idUser)
+        {
+            var services = _context.Services.Where(s => s.IdUser == idUser).ToList();
+            return Ok(services);
+        }
+
         // GET api/services/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Service>> GetService(int id)
@@ -47,8 +55,9 @@ namespace MarketPlaceDisca.Controllers
         [HttpPost]
         [Route("createService")]
 
-        public async Task<ActionResult<Service>> createService([FromBody] Service service)
+        public async Task<ActionResult<Service>> createService( [FromBody] Service service)
         {
+         
             _context.Services.Add(service);
             await _context.SaveChangesAsync();
 

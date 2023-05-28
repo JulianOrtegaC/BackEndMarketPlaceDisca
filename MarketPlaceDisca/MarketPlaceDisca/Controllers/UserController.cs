@@ -32,7 +32,7 @@ namespace MarketPlaceDisca.Controllers
             }
 
             // Actualiza las propiedades que se enviaron en el objeto UserUpdateModel
-            if (!string.IsNullOrEmpty(updateModel.NameUser))
+             if (updateModel.NameUser != null && !string.IsNullOrEmpty(updateModel.NameUser))
             {
                 user.NameUser = updateModel.NameUser;
             }

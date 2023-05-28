@@ -9,7 +9,7 @@ public partial class UserHasService
 
     public int ServiceIdService { get; set; }
 
-    public string? PathPhotos { get; set; }
+    public string? DescriptionUserHasService { get; set; }
 
     public virtual Service ServiceIdServiceNavigation { get; set; } = null!;
 

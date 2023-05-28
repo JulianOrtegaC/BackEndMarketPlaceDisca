@@ -35,5 +35,5 @@ public partial class User
 
     public virtual ICollection<Session> Sessions { get; set; } = new List<Session>();
 
-    public virtual ICollection<Service> ServiceIdServices { get; set; } = new List<Service>();
+    public virtual ICollection<UserHasService> UserHasServices { get; set; } = new List<UserHasService>();
 }

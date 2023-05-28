@@ -21,9 +21,15 @@ public partial class Service
 
     public string Categoria { get; set; } = null!;
 
+    public string? Dispo { get; set; }
+
+    public string? Preview { get; set; }
+
+    public string? IdUser { get; set; }
+
     public virtual ICollection<Request> Requests { get; set; } = new List<Request>();
 
     public virtual ICollection<ServiceHasCategory> ServiceHasCategories { get; set; } = new List<ServiceHasCategory>();
 
-    public virtual ICollection<User> UserIdUsers { get; set; } = new List<User>();
+    public virtual ICollection<UserHasService> UserHasServices { get; set; } = new List<UserHasService>();
 }
