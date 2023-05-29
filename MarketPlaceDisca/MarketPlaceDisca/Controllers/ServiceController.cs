@@ -51,6 +51,32 @@ namespace MarketPlaceDisca.Controllers
             return service;
         }
 
+        // GET api/services/5
+        [HttpGet]
+        [Route("dataContactService")]
+        public async Task<ActionResult<ContactService>> dataContactService(int idService)
+        {
+            var service = await _context.Services.FindAsync(idService);
+            if (service == null)
+            {
+                return BadRequest();
+            }
+            var userAux = await _context.Users.FindAsync(service.IdUser);
+            if (userAux == null)
+            {
+                return BadRequest();
+            }
+            var contactAux = new ContactService()
+            {
+                Email = userAux.Email,
+                Telephone =  userAux.Telephone
+            };
+
+         
+
+            return contactAux;
+        }
+
         // POST api/services
         [HttpPost]
         [Route("createService")]

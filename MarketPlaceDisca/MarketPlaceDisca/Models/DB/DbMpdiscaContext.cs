@@ -192,7 +192,6 @@ public partial class DbMpdiscaContext : DbContext
 
             entity.HasOne(d => d.ServicesContractIdservicesContractNavigation).WithMany(p => p.Requests)
                 .HasForeignKey(d => d.ServicesContractIdservicesContract)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Service_has_User_Services_Contract1");
 
             entity.HasOne(d => d.UserIdUserNavigation).WithMany(p => p.Requests)
